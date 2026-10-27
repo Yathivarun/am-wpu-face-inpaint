@@ -1,0 +1,40 @@
+# ============================================================================
+# SD1.5 face inpaint lab — its own venv (Python 3.10, CUDA 12.1).
+#
+#   python3.10 -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
+#   pip install --upgrade pip wheel
+#   pip install torch==2.2.0 torchvision==0.17.0 --index-url https://download.pytorch.org/whl/cu121
+#   pip install -r requirements.txt
+#   python fetch_models.py
+#
+# Versions are the tested combination (Triton inference stack + dev pre/post);
+# for the offline GPU box use AM/linux-wheelhouse (bash install.sh master).
+# ============================================================================
+
+# ── PyTorch (installed from the CUDA index above; pinned for reference) ─────
+torch==2.2.0
+torchvision==0.17.0
+
+# ── Diffusion ───────────────────────────────────────────────────────────────
+diffusers==0.29.2
+transformers==4.38.2
+accelerate==0.27.2          # --offload (enable_model_cpu_offload)
+safetensors==0.7.0
+peft==0.10.0                # LoRA adapters (style + LCM), fused at load
+huggingface-hub==0.36.2
+
+# ── Faces ───────────────────────────────────────────────────────────────────
+# insightface builds a small C extension: needs a compiler (build-essential /
+# MSVC Build Tools) and Cython.
+Cython>=3.0
+insightface==0.7.3
+onnxruntime==1.16.3         # AuraFace runs on CPU only
+mediapipe==0.10.14
+
+# ── Lineart annotator (scene metadata only) ─────────────────────────────────
+controlnet-aux==0.0.7
+
+# ── Image / array ───────────────────────────────────────────────────────────
+numpy==1.26.4               # < 2: mediapipe / onnxruntime
+opencv-python==4.12.0.88
+Pillow==10.2.0

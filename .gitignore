@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.log
+nohup.out
+
+# Generated renders, run state
+output/
+.queue*/
+
+# Visitor photos: real people's faces, never in git
+mul_face/
+res_test/
+
+# Scene / character art (large, owned by the scene artists): kept on disk and the GPU box
+inputs/
+
+# Weights
+*.safetensors
+*.bin
+*.onnx
+*.pth
+*.ckpt
